@@ -1,63 +1,81 @@
 {% extends 'index_login.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
+{% block menuauth %} 
+    <li class="nav-item">
+        <a class="btn btn-primary btn-xl js-scroll-trigger" href="/accounts/login/">Login</a>
+    </li> 
+{% endblock %}
 {% block main %}
 
-      
+
 <div class="col-lg-8 align-self-baseline">
-            <p class="text-white-75 font-weight-light mb-5">
-                {% comment %} <form class="form-horizontal" action="{% url "register" %}" method="post">
-                    {% csrf_token %} {% endcomment %}
-                    {% comment %} <div class="d-block bg-primary" class="d-flex justify-content-center"> {{ form_register.as_p}}</div> {% endcomment %}
-                    
-                    {% comment %} <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Login</a> {% endcomment %}
-          {% comment %} 
-                   <div class="form-group"> 
-                        <label class="control-label col-sm-10 text-white" for="email"> Nom :</label>
-                        <div class="col-sm-10">
-                            {{ form_register.nom}}
-                        </div>
-                    </div>
-                    
-                    <div class="form-group"> 
-                        <label class="control-label col-sm-10 text-white" for="prenom"> Prenom :</label>
-                        <div class="col-sm-10">
-                          {{ form_register.prenom}}
-                        </div>
-                    </div> {% endcomment %}
-
-                        {% comment %} <div class="form-group"> 
-                        <label class="control-label col-sm-10 text-white" for="password">Email :</label>
-                        <div class="col-sm-10">
-                          {{ form_register.email}}
-                        </div>
-                    </div> {% endcomment %}
-                        <form method="post">
-                {% csrf_token %}
-                <input type="hidden" name="text" value="{{next}}">
-                {{form|crispy}}
-                <button type="submit" >register</button>
-                </form>
-
-                    {% comment %} <div class="form-group"> 
-                        <label class="control-label col-sm-10 text-white" for="datenais"> Date de naissance :</label>
-                        <div class="col-sm-10">
-                          {{ form_register.datenais}}
-                        </div>
-                    </div>
-
-                        <div class="form-group"> 
-                        <label class="control-label col-sm-10 text-white" for="password"> password:</label>
-                        <div class="col-sm-10">
-                          {{ form_register.pwd}}
-                        </div>
-                    </div> {% endcomment %}
-                    {% comment %} <input class="btn btn-primary btn-xl js-scroll-trigger" type="submit" value="Register" />
-
-                </form> {% endcomment %}
-
-
-            </p>
-        
+    <div class="col-lg-12 align-self-end">
+        <h3 class="text-uppercase text-white font-weight-bold text-center">Créer votre compte</h3>
+        <hr class="divider my-4"> 
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="form-group col-md-4 mb-0">
+                {{ form.firstname|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-4 mb-0">
+                {{ form.lastname|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-4 mb-0">
+                {{ form.birth_date|as_crispy_field }}
+            </div>
         </div>
+        <div class="form-row">
+            <div class="form-group col-md-12 mb-0">
+            {{ form.account_type|as_crispy_field }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6 mb-0">
+            {{ form.email|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-6 mb-0">
+            {{ form.username|as_crispy_field }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6 mb-0">
+            {{ form.password1|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-6 mb-0">
+            {{ form.password2|as_crispy_field }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-2 mb-0">
+            {{ form.address_nbr|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-6 mb-0">
+            {{ form.address_street|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-4 mb-0">
+            {{ form.address_apprt|as_crispy_field }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-2 mb-0">
+            {{ form.address_zib_code|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-6 mb-0">
+            {{ form.address_city|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-4 mb-0">
+            {{ form.address_country|as_crispy_field }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group offset-md-4 col-md-4 mb-0">
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+        </div>
+    </form>
+        
+</div>
 {% endblock %}

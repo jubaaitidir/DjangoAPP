@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import ContactForm,LoginForm, RegisterForm
 from .config import our_insert_many,produits,db
 from .logic_for_views import get_graph_data
@@ -61,6 +61,11 @@ def show_image(request):
 
 
 def profile(request):
-    return render(request, 'profile.html')
+    print('user == ',request.user)
+    print('is_authenticated ',request.user.is_authenticated)
+    if request.user.is_authenticated:
+        return render(request, 'profile.html')
+    else:
+        return redirect('/accounts/login')
 
 
