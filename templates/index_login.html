@@ -37,13 +37,10 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto my-2 my-lg-0">
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="/home">accueil</a>
-          </li>
    
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#about">À propos</a>
-          </li>
+          {% comment %} <li class="nav-item">
+             <a class="btn btn-primary btn-xl js-scroll-trigger" href="/accounts/register/">Register</a>
+          </li> {% endcomment %}
         </ul>
       </div>
     </div>
@@ -55,53 +52,20 @@
       <div class="row h-100 align-items-center justify-content-center text-center">
         <div class="col-lg-10 align-self-end">
           <h1 class="text-uppercase text-white font-weight-bold">Devis estimatif & facturation </h1>
-          <hr class="divider my-4">
+          <hr class="divider my-4"> 
         </div>
-        <div class="col-lg-8 align-self-baseline">
-          <p class="text-white-75 font-weight-light mb-5">
-            {% if envoi %}Votre message a bien été envoyé !{% endif %}
-            <form action="{% url "contact" %}" method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <input type="submit" value="Submit" />
-            </form>
-            </p>
-        
-        </div>
+        {% block main %}
+        {% endblock %}
+     
       </div>
     </div>
   </header>
 
 
-
-  <!-- Contact Section -->
-  <section class="page-section" id="about">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-8 text-center">
-          <h2 class="mt-0">Contactez nous!</h2>
-          <hr class="divider my-4">
-          <p class="text-muted mb-5">Vous êtes prêt à nous rejoindre? contactez nous par téléphone ou par mail, et nous vous rappelons le plus vite possible!</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-4 ml-auto text-center mb-5 mb-lg-0">
-          <i class="fas fa-phone fa-3x mb-3 text-muted"></i>
-          <div>+337588121**</div>
-        </div>
-        <div class="col-lg-4 mr-auto text-center">
-          <i class="fas fa-envelope fa-3x mb-3 text-muted"></i>
-          <!-- Make sure to change the email address in anchor text AND the link below! -->
-          <a class="d-block" href="mailto:contact@yourwebsite.com">contact@batEnterprise.com</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Footer -->
   <footer class="bg-light py-5">
     <div class="container">
-      <div class="small text-center text-muted">Copyright &copy; 2019 - Devis & Facture</div>
+      <div class="small text-center text-muted">Copyright &copy; 2019 - Start Bootstrap</div>
     </div>
   </footer>
 
