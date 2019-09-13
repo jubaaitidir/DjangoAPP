@@ -1,6 +1,28 @@
 from pymongo import MongoClient
+import json
+from json import dumps, loads, JSONEncoder, JSONDecoder
+# import pickle
+
+# class PythonObjectEncoder(JSONEncoder):
+#     def default(self, obj):
+#         if isinstance(obj, (list, dict, str, int, float, bool, type(None))):
+#             return JSONEncoder.default(self, obj)
+#         return {'_python_object': pickle.dumps(obj)}
+
+# def as_python_object(dct):
+#     if '_python_object' in dct:
+#         return pickle.loads(str(dct['_python_object']))
+#     return dct
+
+
+
+
 
 client = MongoClient()
+
+
+
+
 
 db = client['store_db']
 db.Products.remove({})
@@ -19,6 +41,10 @@ db.Products.insert([p1,p2, p3, p4, p5, p6, p7])
 # db.createCollection('Clients')
 client = {'account_type': 'company','firstname': 'Anas', 'lastname': 'Erra', 'email': 'anas@mail.com', 'birth_date': '1898-8-7', 'address': {'nbr': 84, 'street': 'rue Tabakayo', 'apprt': '' ,'codePostal': 95684, 'city': 'Chinta', 'country':'Dreamland'}}
 db.Clients.insert(client)
+# js=json.dumps(p1)
+# with open('personal.json', 'w') as json_file:
+#     json.dump(js, json_file)
+
 
 db.Sales.remove({})
 paymentPerson1 = { 'firstname': 'John', 'lastname': 'Dank', 'eamil': 'john@mail.com', 'paymentMethod': {'type': 'Visa','code': '**** 7856', 'exp_date': '09/2020'}}

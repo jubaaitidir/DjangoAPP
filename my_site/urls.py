@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from django.contrib.auth import views as auth_views
-from .views import home_page_view,home_page_view_with_render,contact,login,register, mesFactures, facture
+from .views import home_page_view,home_page_view_with_render,contact,login,register, mesFactures, facture,show_image
 from django.views.generic.edit import CreateView
 # from django.contrib.auth.forms import UserCreationForm
 from .register_model import UserCreateForm
@@ -26,6 +26,7 @@ urlpatterns = [
     path('',home_page_view_with_render,name='home_default_page_render'),
     path('home/',home_page_view_with_render,name='home_page_render'),
     path('contact/',contact,name='contact'),
+    path('stat/',show_image,name='stat'),
     # path('login/',login,name='login'),
     # path('login/',auth_views.LoginView.as_view(),name='login'),
     # path('register/',register,name='register'),
