@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.forms import User
+# from django.contrib.auth.forms import User
+from django.contrib.auth.models import User
+# from .models import Profile
 import datetime
 
 STATES = (
@@ -17,6 +19,10 @@ STATES = (
     ('MA', 'Maroc'),
 )
 class UserCreateForm(UserCreationForm):
+    error_messages = {
+        'password_mismatch': "Les deux champs de mot de passe ne correspondent pas.",
+    }
+
     email = forms.EmailField(required=True,label='Email',error_messages={'exists': 'Oops'}, widget=forms.TextInput(attrs={'class': 'form-control'}))
     username = forms.CharField(label='Login',widget=forms.TextInput(attrs={'class': 'form-control'}))
     password1 = forms.CharField(label='Mot de Passe',widget=forms.PasswordInput(attrs={'class': 'form-control'}))
@@ -42,16 +48,26 @@ class UserCreateForm(UserCreationForm):
 
     class Meta:
         model = User
+        # model = Profile
         fields = ("firstname","lastname","username", "birth_date","email", "password1", "password2","account_type","address_nbr","address_street","address_apprt","address_zib_code","address_city","address_country")
 
+    def clean_password2(self):
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError(
+                self.error_messages['password_mismatch'],
+                code='password_mismatch',
+            )
+        return password2
 
     def save(self, commit=True):
         user = super(UserCreateForm, self).save(commit=False)
         user.email = self.cleaned_data["email"]
-        user.firstname = self.cleaned_data["firstname"]
-        user.lastname = self.cleaned_data["lastname"]
-        user.birth_date = self.cleaned_data["birth_date"]
-        user.account_type = self.cleaned_data["email"]
+        user.profile.firstname = self.cleaned_data["firstname"]
+        user.profile.lastname = self.cleaned_data["lastname"]
+        user.profile.birth_date = self.cleaned_data["birth_date"]
+        user.profile.account_type = self.cleaned_data["email"]
         
         adresse = {'nbr':self.cleaned_data["address_nbr"], 'street':self.cleaned_data["address_street"], 'apprt': self.cleaned_data["address_apprt"],'zib_code': self.cleaned_data["address_zib_code"], 'city': self.cleaned_data["address_city"], 'country':self.cleaned_data["address_city"]}
         user.address = adresse
@@ -63,10 +79,11 @@ class UserCreateForm(UserCreationForm):
         # user.address_country = self.cleaned_data["address_country"]
         
         if commit:
+            print('saved user = ', user)
             user.save()
         return user
 
     def clean_email(self):
         if User.objects.filter(email=self.cleaned_data['email']).exists():
-            raise ValidationError(self.fields['email'].error_messages['exists'])
+            raise forms.ValidationError(self.fields['email'].error_messages['exists'])
         return self.cleaned_data['email']

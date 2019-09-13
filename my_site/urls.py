@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from django.contrib.auth import views as auth_views
-from .views import home_page_view,home_page_view_with_render,contact,login,register
+from .views import home_page_view,home_page_view_with_render,contact,login,register, mesFactures, facture
 from django.views.generic.edit import CreateView
 # from django.contrib.auth.forms import UserCreationForm
 from .register_model import UserCreateForm
@@ -30,5 +30,7 @@ urlpatterns = [
     # path('login/',auth_views.LoginView.as_view(),name='login'),
     # path('register/',register,name='register'),
     # path('register/', CreateView.as_view(template_name='register.html',form_class=UserCreateForm,success_url='/')),
-    path('accounts/',include("accounts.urls"))
+    path('accounts/',include("accounts.urls")),
+    path('mesfactures/',mesFactures,name='mesFactures'),
+    path('facture/<ref_facture>/', facture,name='facture'),
 ]

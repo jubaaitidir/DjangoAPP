@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .forms import ContactForm,LoginForm, RegisterForm
-from .config import our_insert_many,produits,db
+from .config import our_insert_many,db, get_Sales, get_Sale
 from .logic_for_views import get_graph_data
 import pymongo
 import pprint
@@ -22,9 +22,6 @@ def contact(request):
         renvoi=form.cleaned_data["renvoi"]
         envoi=True
         items={'titre':"chaise",'ref':"chaise_table_xl"}
-        produits.insert_one(items)
-        our_insert_many(items,db, produits)
-        pprint.pprint(produits.find_one())
         print(request.POST["message"])
     return render(request, 'contact.html',locals())
 
@@ -68,4 +65,28 @@ def profile(request):
     else:
         return redirect('/accounts/login')
 
+def mesFactures(request):
+    print('user = ', request.user)
+    sales = get_Sales(request.user.username)
+    new_sales = list(sales)
+    for s in new_sales:
+        s['id'] = s['_id']
+    print('sales ===== ', list(new_sales))
+    return render(request, 'mesfactures.html', {'factures': new_sales})
 
+def facture(request, ref_facture):
+    # list_product = get_all_products()
+    sale_obj = get_Sale(request.user.username, ref_facture)
+    # if len(list_product) == 0:
+    #     list_product = []
+    subtotal=0
+    shipping=0
+    total=0
+    # for s in get_Sale():
+    #     print(s)
+    for s in get_Sale(request.user.username, ref_facture):
+        subtotal += s['product']['pu'] * s['quantity']
+        shipping += s['shipping']
+        total += subtotal
+    
+    return render(request, "facture.html", {'sale': sale_obj, 'subtotal': subtotal, 'shipping': shipping, 'total': total})

@@ -1,0 +1,33 @@
+{% extends 'index.html' %}
+{% block main %}
+
+<div class="col-lg-8 align-self-baseline">
+    <div class="col-md-12 align-self-end">
+        <h3 class="text-uppercase text-white font-weight-bold text-center">La liste des factures</h3>
+        <hr class="divider my-4">
+    </div>
+    <table class="table table-condensed">
+            <thead>
+                <tr style="color: white">
+                    <th scope="col">Ref</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Total-item</th>
+                    <th scope="col">total price</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for f in factures %}
+                <tr>
+                    <th scope="row" style="color: white">{{f.id.ref}}</th>
+                    <td style="color: white">{{f.id.date}}</td>
+                    <td style="color: white">{{f.count}}</td>
+                    <td style="color: white">{{f.totalPrice}}€</td>
+                    <td> <a href="/facture/{{f.id.ref}}">Show details</a></td>
+                </tr>
+                {% endfor %}
+               
+            </tbody>
+        </table>
+</div>
+{% endblock %}

@@ -37,24 +37,35 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto my-2 my-lg-0">
+          {% if user.is_authenticated and user.account_type == "Entreprise" %}
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="/stats">Mes stats</a>
+            </li>
+          {% endif %}
+          {% if user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#about">À propos</a>
+            <a class="nav-link js-scroll-trigger" href="/mesfactures">Factures</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#services">Services</a>
-          </li>
+          {% endif %}
+
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a>
           </li>
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="contact">Contact</a>
           </li>
-          <!-- <li class="nav-item">
-             <a class="btn btn-primary btn-xl js-scroll-trigger" href="/accounts/login/">Login</a>
-          </li> -->
+          {% if user.is_authenticated %}
           <li class="nav-item">
              <a class="btn btn-primary btn-xl js-scroll-trigger" href="/accounts/logout/">Déconnecter</a>
           </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="btn btn-primary btn-xl js-scroll-trigger" href="/accounts/login/">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-primary btn-xl js-scroll-trigger" href="/accounts/register/">Register</a>
+            </li>
+          {% endif %}
         </ul>
       </div>
     </div>
